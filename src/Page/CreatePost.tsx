@@ -1,5 +1,4 @@
-import React, {useState ,useEffect, FormEvent} from 'react'
-import prisma from '../prisma'
+import React, {useState , FormEvent} from 'react'
 import Swal from 'sweetalert2'
 
 interface User {
@@ -10,6 +9,7 @@ interface Post {
   title: string;
   content: string;
   published: boolean;
+  reference: string | null;
   author?: User | null;
   authorId?: number | null;
 }
@@ -17,10 +17,11 @@ interface Post {
 function CreatePost() {
   const [title ,setTitle] = useState('')
   const [content ,setContent] = useState('')
+  const [references ,setReferences] = useState('')
   const [published ,setPublished] = useState(false)
 
   function handleSubmitPost(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+    event.preventDefault()
     if (title.length === 0) {
       Swal.fire({
         icon: 'warning',
@@ -28,10 +29,19 @@ function CreatePost() {
       })
       return
     }
+
     if (content.length === 0) {
       Swal.fire({
         icon: 'warning',
         title: 'content is required'
+      })
+      return
+    }
+
+    if (references.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'references is required'
       })
       return
     }
@@ -42,14 +52,42 @@ function CreatePost() {
           title: title,
           content: content,
           published: published,
+          reference: references,
+          authorId: 97
         }
-        await fetch('http://localhost:5000/createPost',{
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData)
-        })
+        
+        try {
+          const res = await fetch('http://localhost:5000/post/createPost',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+          })
+          
+          if (res.status === 200) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Post Alert',
+              text: "Post successfully created"
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Post Alert',
+              text: "Post failed to create"
+            })
+          }
+          
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Post Alert',
+            text: "Post failed to create"
+          })
+
+          console.error(error);
+        }
       }
     )()
     
@@ -68,6 +106,10 @@ function CreatePost() {
         <div className='w-96 my-4'>
           <p className='text-button text-lg font-semibold'>Content</p>
           <textarea className='w-full text-lg p-2 caret-background rounded-xl outline-none focus:border-2 focus:border-button' name="" id="" cols={30} rows={5} onChange={(event) => setContent(event.target.value)}></textarea>
+        </div>
+        <div className='w-96 my-4'>
+          <p className='text-md text-button text-lg font-semibold'>Reference</p>
+          <input type="text" className='w-full text-lg p-2 caret-background rounded-xl outline-none focus:border-2 focus:border-button' onChange={(event) => setReferences(event.target.value)} />
         </div>
         <div className='w-96 my-4'>
           <p className='text-button text-lg font-semibold'>Publish Now</p>

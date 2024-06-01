@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {PrismaClient} = require('@prisma/client');
-const { faDiagramSuccessor } = require('@fortawesome/free-solid-svg-icons');
 
 const prisma = new PrismaClient()
 
@@ -14,11 +13,35 @@ router.get('/getPosts', async(request ,response) => {
     }
 })
 
+router.get('/getPostById/:id', async(request ,response) => {
+    const postId = request.params.id;
+
+    try {
+        const posts = await prisma.post.findUnique({
+            where: {
+                id: parseInt(postId)
+            }
+        })
+        
+        if (!posts) {
+            return response.status(400).json({
+                status: false,
+                message: "Post not found"
+            })
+        }
+
+        response.json(posts)
+    } catch (error) {
+        console.error("Server error: " + error);
+    }
+})
+
 router.post('/createPost' ,async(request ,response) => {
     const {
         title,
         content,
-        published = false,
+        reference,
+        published,
         authorId
     } = request.body
 
@@ -35,6 +58,7 @@ router.post('/createPost' ,async(request ,response) => {
                 title,
                 content,
                 published,
+                reference,
                 authorId
             }
         })
@@ -87,12 +111,12 @@ router.post('/setPublished', async(request, response) => {
         if (updatePost) {
             response.status(200).json({
                 status: true,
-                message: "Post has been updated successfully" 
+                message: "Post has been updated successfully"
             })
         } else {
             response.status(404).json({
                 status: false,
-                message: "Post not found" 
+                message: "Post not found"
             })
         }
     } catch (error) {
@@ -100,6 +124,30 @@ router.post('/setPublished', async(request, response) => {
     }
 })
 
-router.post('/')
+router.post('/deletePost/:postId', async(request, response) => {
+    const postId = request.params.postId
+    
+    try {
+        const res = await prisma.post.delete({
+            where: {
+                id: parseInt(postId)
+            }
+        })
+
+        if (!res) {
+            return response.json({
+                status: false,
+                message: 'Couldn\'t delete the post'
+            })
+        }
+
+        response.json({
+            status: true,
+            message: 'Delete post successfully'
+        })
+    } catch (error) {
+        console.error(error);
+    }
+})
 
 module.exports = router
