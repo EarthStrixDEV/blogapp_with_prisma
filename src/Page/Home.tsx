@@ -1,5 +1,5 @@
 import React from 'react'
-import PostLanding from './PostLanding'
+import PostLanding from '../components/PostLanding'
 
 function Home() {
   return (

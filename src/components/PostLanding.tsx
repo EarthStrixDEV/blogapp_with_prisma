@@ -8,6 +8,7 @@ interface Post {
   content: string;
   reference: string;
   authorId: number;
+  timeStamp: any;
 }
 
 function PostLanding() {
@@ -33,7 +34,10 @@ function PostLanding() {
         postData?.map((item: Post) => (
           <div key={item.id} className='flex flex-col justify-between bg-primary p-5 rounded-lg my-5'>
             <div className="flex flex-col justify-center">
-              <h1 className="text-xl mb-4 text-white font-semibold">{item.title}</h1>
+              <div className='flex flex-row justify-between'>
+                <h1 className="text-xl mb-4 text-white font-semibold">{item.title}</h1>
+                <p className='text-xl font-normal text-white'>เผยแพร่เมื่อ {item.timeStamp.replace('T',' เวลา ').slice(0 ,24)} น.</p>
+              </div>
               <h3 className="text-base text-white font-normal">{item.content}</h3>
             </div>
             <div className='flex flex-row justify-between'>

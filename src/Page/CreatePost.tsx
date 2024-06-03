@@ -101,20 +101,20 @@ function CreatePost() {
         </div>
         <div className='w-96 my-4'>
           <p className='text-md text-button text-lg font-semibold'>Title</p>
-          <input type="text" className='w-full text-lg p-2 caret-background rounded-xl outline-none focus:border-2 focus:border-button' onChange={(event) => setTitle(event.target.value)} />
+          <input type="text" className='w-full text-lg p-2 caret-background rounded-xl outline-none transition-all ease-out focus:outline-2 focus:outline-button' onChange={(event) => setTitle(event.target.value)} />
         </div>
         <div className='w-96 my-4'>
           <p className='text-button text-lg font-semibold'>Content</p>
-          <textarea className='w-full text-lg p-2 caret-background rounded-xl outline-none focus:border-2 focus:border-button' name="" id="" cols={30} rows={5} onChange={(event) => setContent(event.target.value)}></textarea>
+          <textarea className='w-full text-lg p-2 caret-background rounded-xl outline-none focus:outline-2 transition-all ease-out focus:outline-button' name="" id="" cols={30} rows={5} onChange={(event) => setContent(event.target.value)}></textarea>
         </div>
         <div className='w-96 my-4'>
           <p className='text-md text-button text-lg font-semibold'>Reference</p>
-          <input type="text" className='w-full text-lg p-2 caret-background rounded-xl outline-none focus:border-2 focus:border-button' onChange={(event) => setReferences(event.target.value)} />
+          <input type="text" className='w-full text-lg p-2 caret-background rounded-xl outline-none transition-all ease-out focus:outline-2 focus:outline-button' onChange={(event) => setReferences(event.target.value)} />
         </div>
         <div className='w-96 my-4'>
           <p className='text-button text-lg font-semibold'>Publish Now</p>
           <label className="flex items-center cursor-pointer">
-            <input type="checkbox" id="publish-checkbox" name="isPublished" className="h-10 w-10 rounded-full bg-gray-200 border-gray-300" onChange={(event) => setPublished(event.target.checked)} />
+            <input type="checkbox" id="publish-checkbox" name="isPublished" className="h-10 w-10 rounded-full bg-gray-200 border-gray-300 focus:outline-2 focus:outline-button" onChange={(event) => setPublished(event.target.checked)} />
           </label>
         </div>
         <div className='w-96 my-4'>
