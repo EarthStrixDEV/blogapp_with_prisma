@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import CreatePost from './Page/CreatePost';
 import About from './Page/About';
 import AdminPage from './Page/AdminPage';
+import EditPost from './Page/EditPost';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='createPost' element={<CreatePost />} />
         <Route path='about' element={<About />} />
         <Route path='adminPage' element={<AdminPage />} />
+        <Route path='editPost/:postId' element={<EditPost />} />
       </Route>
     </Routes>
   );

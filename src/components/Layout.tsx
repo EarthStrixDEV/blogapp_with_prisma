@@ -7,14 +7,14 @@ import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg
 function Layout() {
   return (
     <div>
-        <nav className='flex flex-row justify-start bg-[#001D3D] p-3 w-full fixed'>
+        <nav className='flex flex-row justify-start bg-[#001D3D] p-3 w-full fixed top-0 backdrop-blur-md'>
           <Link to="/" className='text-center text-lg text-[#001D3D] mx-3 p-2 tracking-wide font-medium rounded-lg bg-[#FFC300]'>Home</Link>
           <Link to="/createPost" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Post</Link>
           <Link to="/adminPage" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Admin</Link>
           <Link to="/about" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>About</Link>
         </nav>
         <Outlet />
-        <footer className="bg-primary text-white py-7 px-5 flex flex-wrap justify-between items-center">
+        <footer className="bg-primary text-white py-7 px-5 flex flex-wrap justify-between items-center relative bottom-0 w-full">
           <div className="text-center">
             &copy; {new Date().getFullYear()} EarthStrix
           </div>

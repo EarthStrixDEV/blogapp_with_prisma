@@ -17,7 +17,7 @@ router.get('/getPostById/:id', async(request ,response) => {
     const postId = request.params.id;
 
     try {
-        const posts = await prisma.post.findUnique({
+        const posts = await prisma.post.findMany({
             where: {
                 id: parseInt(postId)
             }
@@ -42,7 +42,8 @@ router.post('/createPost' ,async(request ,response) => {
         content,
         reference,
         published,
-        authorId
+        categories,
+        authorId,
     } = request.body
 
     if (!title || !content || !authorId) {
@@ -53,13 +54,31 @@ router.post('/createPost' ,async(request ,response) => {
     }
 
     try {
-        await prisma.post.create({
+        const createPost = await prisma.post.create({
             data: {
                 title,
                 content,
                 published,
                 reference,
-                authorId
+                authorId,
+                categories: {
+                    connect: {
+                        name: categories
+                    }
+                }
+            }
+        })
+
+        await prisma.category.update({
+            where: {
+                name: categories
+            },
+            data: {
+                posts: {
+                    connect: {
+                        id: createPost.id,
+                    }
+                }
             }
         })
 

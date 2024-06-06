@@ -8,6 +8,7 @@ interface Post {
     published: boolean;
     reference: string;
     authorId: number;
+    timeStamp: string;
 }
 
 function AdminPage() {
@@ -20,7 +21,7 @@ function AdminPage() {
             setPostData(data)
         })()
         
-    }, [])
+    }, [postData])
 
     async function handleDeleteSubmit(postId: number) {
         try {
@@ -33,6 +34,9 @@ function AdminPage() {
                     icon: 'success',
                     title: 'Post deleted successfully'
                 })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -47,7 +51,7 @@ function AdminPage() {
     return (
         <div>
             <div className="flex flex-col p-10 h-screen w-full bg-background">
-                <table className="w-full text-sm text-left mt-10">
+                <table className="w-full text-sm text-left mt-14">
                     <thead className="text-lg text-button uppercase bg-primary">
                         <tr>
                             <th scope="col" className="px-6 py-3">
@@ -66,6 +70,9 @@ function AdminPage() {
                                 Published
                             </th>
                             <th scope="col" className="px-6 py-3">
+                                TimeStamp
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 Author Id
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -76,7 +83,7 @@ function AdminPage() {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='overflow-y-scroll h-10'>
                         {
                             postData.map((item:Post) => (
                                 <tr className="bg-secondary border-b">
@@ -89,17 +96,20 @@ function AdminPage() {
                                     <td className="px-6 py-4 text-white text-base font-semibold">
                                         {item.content}
                                     </td>
-                                    <td className="px-6 py-4 w-24 text-white text-base font-semibold text-wrap">
+                                    <td className="px-6 py-4 max-w-56 text-white text-base font-semibold text-wrap truncate">
                                         {item.reference === null ? "No" : item.reference}
                                     </td>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
                                         {item.published === false ? "Not Published" : "Published"}
                                     </td>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
+                                        {item.timeStamp.replace("T"," ").slice(0,19)}
+                                    </td>
+                                    <td className="px-6 py-4 text-white text-base font-semibold">
                                         {item.authorId}
                                     </td>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
-                                        <a className="text-lg text-secondary bg-button p-3 rounded-md border-0 hover:shadow-sm hover:shadow-yellow-200">Edit</a>
+                                        <a href={`/editPost/${item.id}`} className="text-lg text-secondary bg-button p-3 rounded-md border-0 hover:shadow-sm hover:shadow-yellow-200">Edit</a>
                                     </td>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
                                         <button onClick={() => handleDeleteSubmit(item.id)} className="text-lg text-secondary bg-button p-3 rounded-md border-0 hover:shadow-sm hover:shadow-yellow-200">Delete</button>
