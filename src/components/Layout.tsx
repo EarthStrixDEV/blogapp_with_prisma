@@ -3,18 +3,49 @@ import { Link } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 function Layout() {
+  function NavigateToAdmin() {
+    Swal.fire({
+      title: "Enter Admin Key",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Hi, Admin",
+      allowOutsideClick: false,
+    }).then(async(result: SweetAlertResult<string | undefined>) => {
+      const inputValue = result.value?.toUpperCase()
+      console.log(inputValue);
+      
+      const res = await fetch(`http://localhost:5000/user/adminValidate`,{
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          adminKey: inputValue
+        })
+      })
+
+      if (res.status === 200) {
+        window.location.href = `/adminPage/${inputValue}`
+      }
+    })
+  }
   return (
     <div>
-        <nav className='flex flex-row justify-start bg-[#001D3D] p-3 w-full fixed top-0 backdrop-blur-md'>
+        <nav className='flex flex-row justify-start p-3 w-full fixed top-0 backdrop-blur-sm'>
           <Link to="/" className='text-center text-lg text-[#001D3D] mx-3 p-2 tracking-wide font-medium rounded-lg bg-[#FFC300]'>Home</Link>
           <Link to="/createPost" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Post</Link>
-          <Link to="/adminPage" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Admin</Link>
+          <Link to="#" onClick={NavigateToAdmin} className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Admin</Link>
           <Link to="/about" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>About</Link>
         </nav>
         <Outlet />
-        <footer className="bg-primary text-white py-7 px-5 flex flex-wrap justify-between items-center relative bottom-0 w-full">
+        <footer className="bg-background text-white py-7 px-5 flex flex-wrap justify-between items-center relative bottom-0 w-full">
           <div className="text-center">
             &copy; {new Date().getFullYear()} EarthStrix
           </div>

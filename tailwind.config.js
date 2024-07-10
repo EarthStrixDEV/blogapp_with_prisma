@@ -13,6 +13,7 @@ module.exports = {
       button: "#FFC300",
       white: "#FFFFFF",
       black: "#000000",
+      whiteLineHR: "#636363",
     }
   },
   plugins: [], // Add any Tailwind plugins here

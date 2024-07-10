@@ -32,7 +32,7 @@ function PostLanding() {
     <div>
       {
         postData?.map((item: Post) => (
-          <div key={item.id} className='flex flex-col justify-between bg-primary p-5 rounded-lg my-5'>
+          <div key={item.id} className='flex flex-col justify-between p-5 rounded-lg my-5'>
             <div className="flex flex-col justify-center">
               <div className='flex flex-row justify-between'>
                 <h1 className="text-2xl mb-4 text-white font-bold">{item.title}</h1>
@@ -50,6 +50,7 @@ function PostLanding() {
                 <FontAwesomeIcon icon={faThumbsUp} size='2x' color='white' />
               </div>
             </div>
+            <hr className='mt-8 border-whiteLineHR' />
           </div>
         ))
       }

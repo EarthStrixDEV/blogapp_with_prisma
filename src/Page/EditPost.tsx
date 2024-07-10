@@ -36,7 +36,7 @@ function EditPost() {
       const data = await res.json();
       setPostData(data);
     })()
-  }, [])
+  }, [postId])
 
   return (
     <div className="flex flex-col justify-center items-center p-10 h-screen w-full bg-background">

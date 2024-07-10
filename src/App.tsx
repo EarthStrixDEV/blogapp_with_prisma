@@ -14,7 +14,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path='createPost' element={<CreatePost />} />
         <Route path='about' element={<About />} />
-        <Route path='adminPage' element={<AdminPage />} />
+        <Route path='adminPage/:adminKey' element={<AdminPage />} />
         <Route path='editPost/:postId' element={<EditPost />} />
       </Route>
     </Routes>

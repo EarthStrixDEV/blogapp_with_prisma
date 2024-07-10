@@ -1,4 +1,5 @@
 import React, {useState ,useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 interface Post {
@@ -13,6 +14,8 @@ interface Post {
 
 function AdminPage() {
     const [postData ,setPostData] = useState([])
+    const params = useParams()
+    const adminKey = params.adminKey
     
     useEffect(() => {
         (async() => {
@@ -20,8 +23,25 @@ function AdminPage() {
             const data = await res.json()
             setPostData(data)
         })()
-        
     }, [postData])
+
+    useEffect(() => {
+        (async() => {
+            const res = await fetch(`http://localhost:5000/user/adminValidate`,{
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  adminKey: adminKey
+                })
+            })
+            
+            if (res.status === 404) {
+                window.location.href = "/"
+            }
+        })()
+    }, [adminKey])
 
     async function handleDeleteSubmit(postId: number) {
         try {
