@@ -1,6 +1,7 @@
 const express = require('express');
 const {PrismaClient} = require('@prisma/client');
 const router = express.Router();
+const validator = require('validator')
 const prisma = new PrismaClient()
 
 require('dotenv').config()
@@ -10,6 +11,12 @@ router.post('/login', async(request ,response) => {
         email,
         password
     } = request.body
+
+    if (!validator.isEmail(email)) {
+        return response.sendStatus(404).json({
+            message: "Invalid email"
+        })
+    }
 
     try {
         const data = await prisma.user.findMany({
@@ -41,6 +48,18 @@ router.post('/register', async(request ,response) => {
         name
     } = request.body
 
+    if (!validator.isEmail(email)) {
+        return response.sendStatus(404).json({
+            message: 'Invalid email'
+        })
+    }
+
+    if (!validator.isLength(password ,8 ,20)) {
+        return response.sendStatus(404).json({
+            message: 'Password must be at least 8 characters long and at least 20 characters'
+        })
+    }
+
     try {
         const getDuplicateUser = await prisma.post.findMany({
             where: {
@@ -64,7 +83,9 @@ router.post('/register', async(request ,response) => {
         })
 
         console.log('Add user successfully');
+        response.sendStatus(200)
     } catch (error) {
+        response.sendStatus(500)
         console.error("Server error: " + error);
     }
 })

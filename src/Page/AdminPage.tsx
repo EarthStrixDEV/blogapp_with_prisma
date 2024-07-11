@@ -23,7 +23,7 @@ function AdminPage() {
             const data = await res.json()
             setPostData(data)
         })()
-    }, [postData])
+    }, [])
 
     useEffect(() => {
         (async() => {
@@ -107,7 +107,7 @@ function AdminPage() {
                         {
                             postData.map((item:Post) => (
                                 <tr className="bg-secondary border-b">
-                                    <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark text-white">
                                         {item.id}
                                     </th>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
@@ -129,10 +129,10 @@ function AdminPage() {
                                         {item.authorId}
                                     </td>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
-                                        <a href={`/editPost/${item.id}`} className="text-lg text-secondary bg-button p-3 rounded-md border-0 hover:shadow-sm hover:shadow-yellow-200">Edit</a>
+                                        <a href={`/editPost/${item.id}`} className="text-lg text-primary bg-button p-3 rounded-md border-0 text-background hover:shadow-sm hover:shadow-yellow-200">Edit</a>
                                     </td>
                                     <td className="px-6 py-4 text-white text-base font-semibold">
-                                        <button onClick={() => handleDeleteSubmit(item.id)} className="text-lg text-secondary bg-button p-3 rounded-md border-0 hover:shadow-sm hover:shadow-yellow-200">Delete</button>
+                                        <button onClick={() => handleDeleteSubmit(item.id)} className="text-lg text-primary bg-button p-3 rounded-md border-0 hover:shadow-sm hover:shadow-yellow-200">Delete</button>
                                     </td>
                                 </tr>
                             ))

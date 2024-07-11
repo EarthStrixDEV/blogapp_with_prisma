@@ -39,14 +39,15 @@ function Layout() {
   return (
     <div>
         <nav className='flex flex-row justify-start p-3 w-full fixed top-0 backdrop-blur-sm'>
-          <Link to="/" className='text-center text-lg text-[#001D3D] mx-3 p-2 tracking-wide font-medium rounded-lg bg-[#FFC300]'>Home</Link>
-          <Link to="/createPost" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Post</Link>
-          <Link to="#" onClick={NavigateToAdmin} className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>Admin</Link>
-          <Link to="/about" className='text-center text-lg text-[#FFC300] mx-3 p-2 tracking-wide font-medium '>About</Link>
+          <Link to="/" className='text-center text-lg text-[#001D3D] mx-3 p-2 tracking-wide font-medium rounded-lg bg-text'>Home</Link>
+          <Link to="/createPost" className='text-center text-lg text-text mx-3 p-2 tracking-wide font-medium '>Post</Link>
+          <Link to="#" onClick={NavigateToAdmin} className='text-center text-lg text-text mx-3 p-2 tracking-wide font-medium '>Admin</Link>
+          <Link to="/about" className='text-center text-lg text-text mx-3 p-2 tracking-wide font-medium '>About</Link>
+          <Link to="/login" className='text-center text-lg text-text mx-3 p-2 tracking-wide font-medium '>Login</Link>
         </nav>
         <Outlet />
         <footer className="bg-background text-white py-7 px-5 flex flex-wrap justify-between items-center relative bottom-0 w-full">
-          <div className="text-center">
+          <div className="text-center font-medium text-lg text-text">
             &copy; {new Date().getFullYear()} EarthStrix
           </div>
           <nav className="space-x-4">

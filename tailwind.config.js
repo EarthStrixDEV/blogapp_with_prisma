@@ -7,10 +7,11 @@ module.exports = {
     extend: {
     }, // Add custom Tailwind theme configurations here
     colors: {
-      background: "#000814",
-      primary: "#001D3D",
-      secondary: "#003566",
-      button: "#FFC300",
+      background: "#19313b",
+      primary: "#264653",
+      secondary: "#2A9D8F",
+      button: "#F4A261",
+      text: "#E9C46A",
       white: "#FFFFFF",
       black: "#000000",
       whiteLineHR: "#636363",

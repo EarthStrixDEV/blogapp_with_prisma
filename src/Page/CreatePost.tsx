@@ -96,7 +96,6 @@ function CreatePost() {
         }
       }
     )()
-    
   }
 
   return (
@@ -105,7 +104,7 @@ function CreatePost() {
         <div className='px-10 my-5'>
           <h1 className='font-semibold text-center text-4xl text-button'>Create Post</h1>
         </div>
-        <hr className='border-white-200 w-full my-5' />
+        <hr className='border-text w-full my-3' />
         <div className='w-96 my-4'>
           <p className='text-md text-button text-lg font-semibold'>Title</p>
           <input type="text" className='w-full text-lg p-2 caret-background rounded-xl outline-none transition-all ease-out focus:outline-2 focus:outline-button' onChange={(event) => setTitle(event.target.value)} />

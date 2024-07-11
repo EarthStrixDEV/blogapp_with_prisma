@@ -1,6 +1,7 @@
 import { itxClientDenyList } from "@prisma/client/runtime/library";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FormEventHandler, FormEvent } from "react";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 interface User {
   id: number;
@@ -38,15 +39,47 @@ function EditPost() {
     })()
   }, [postId])
 
+  function handleSubmitForm(event: FormEvent) {
+    event.preventDefault();
+    if (title.length === 0) {
+      Swal.fire({
+        title: "Title is required",
+        icon: "error"
+      })
+      return
+    }
+    if (content.length === 0) {
+      Swal.fire({
+        title: "Content is required",
+        icon: "error"
+      })
+      return
+    }
+    if (references.length === 0) {
+      Swal.fire({
+        title: "References is required",
+        icon: "error"
+      })
+      return
+    }
+
+    (
+      async() => {
+        const res = await fetch('http://localhost:5000/post/updatePost')
+      }
+    )()
+  }
+
   return (
     <div className="flex flex-col justify-center items-center p-10 h-screen w-full bg-background">
       {postData.map((post: Post) => (
-        <form className="flex flex-col justify-center items-center bg-primary w-5/12 p-10 mt-24 mb-10 rounded-md">
+        <form className="flex flex-col justify-center items-center w-5/12 p-10 mt-24 mb-10 rounded-md" onSubmit={handleSubmitForm}>
           <div className="px-10 my-5">
             <h1 className="font-semibold text-center text-4xl text-button">
               Edit Post
             </h1>
           </div>
+          <hr className='border-text w-full my-3' />
           <div className="w-96 my-4">
             <p className="text-md text-button text-lg font-semibold">Title</p>
             <input

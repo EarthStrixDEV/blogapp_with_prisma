@@ -91,6 +91,12 @@ router.post('/createPost' ,async(request ,response) => {
     }
 })
 
+router.post("/updatePost",(request ,response) => {
+    const {
+        
+    } = request.body
+})
+
 router.post('/setPublished', async(request, response) => {
     const {
         published,

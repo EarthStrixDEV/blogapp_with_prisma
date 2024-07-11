@@ -6,6 +6,8 @@ import CreatePost from './Page/CreatePost';
 import About from './Page/About';
 import AdminPage from './Page/AdminPage';
 import EditPost from './Page/EditPost';
+import Login from './Page/Login';
+import Register from './Page/Register';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route index element={<Home />} />
         <Route path='createPost' element={<CreatePost />} />
         <Route path='about' element={<About />} />
+        <Route path='login' element={<Login />} />
+        <Route path='register' element={<Register />} />
         <Route path='adminPage/:adminKey' element={<AdminPage />} />
         <Route path='editPost/:postId' element={<EditPost />} />
       </Route>
