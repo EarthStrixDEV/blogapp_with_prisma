@@ -19,5 +19,5 @@ app.use('/post', post)
 app.use('/user', user)
 
 app.listen(PORT ,() => {
-    console.log('Server is running at [http://localhost:5000]');
+    console.log('Express Server is running at [http://localhost:5000]');
 })

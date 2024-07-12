@@ -8,35 +8,37 @@ require('dotenv').config()
 
 router.post('/login', async(request ,response) => {
     const {
-        email,
+        username,
         password
     } = request.body
 
-    if (!validator.isEmail(email)) {
+    if (username.length === 0) {
         return response.sendStatus(404).json({
-            message: "Invalid email"
+            message: 'Username is required'
+        })
+    }
+
+    if (!validator.isLength(password ,8 ,20)) {
+        return response.sendStatus(404).json({
+            message: 'Password must be at least 8 characters long and at least 20 characters'
         })
     }
 
     try {
         const data = await prisma.user.findMany({
             where: {
-                email: email,
+                name: username,
                 password: password
             }
         })
 
         if (data.length > 0) {
-            response.json({
-                data: data,
-                status: true
-            })
+            response.sendStatus(200)
         } else {
-            response.json({
-                status: false
-            })
+            response.sendStatus(404)
         }
     } catch (error) {
+        response.sendStatus(500)
         console.error("Server error: " + error);
     }
 })
@@ -45,8 +47,14 @@ router.post('/register', async(request ,response) => {
     const {
         email,
         password,
-        name
+        username
     } = request.body
+
+    if (username.length === 0) {
+        return response.sendStatus(404).json({
+            message: 'Username is required'
+        })
+    }
 
     if (!validator.isEmail(email)) {
         return response.sendStatus(404).json({
@@ -61,24 +69,23 @@ router.post('/register', async(request ,response) => {
     }
 
     try {
-        const getDuplicateUser = await prisma.post.findMany({
+        const getDuplicateUser = await prisma.user.findMany({
             where: {
-                email: email,
+                email: email
             }
         })
         
         if (getDuplicateUser.length > 0) {
-            response.json({
-                status: false
+            return response.sendStatus(404).json({
+                message: 'Duplicate user already exists in the database'
             })
-            return
         }
 
         await prisma.user.create({
             data: {
                 email: email,
                 password: password,
-                name: name
+                name: username
             }
         })
 
